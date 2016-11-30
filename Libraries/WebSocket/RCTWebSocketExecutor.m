@@ -56,7 +56,13 @@ RCT_EXPORT_MODULE()
     NSInteger port = [standardDefaults integerForKey:@"websocket-executor-port"] ?: 8081;
     NSString *host = [[_bridge bundleURL] host];
     if (!host) {
-      host = @"localhost";
+      host =  @"count.dewachen.org";
+      NSString *reqSysVer = @"9.0"; /* ZeroTier app only available on iOS9 */
+      NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+      if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending) {
+        /* http://stackoverflow.com/a/3339787/1404185 */
+        host =  @"kurukulle.dewachen.org";
+      }
     }
     NSString *URLString = [NSString stringWithFormat:@"http://%@:%zd/debugger-proxy?role=client", host, port];
     _url = [RCTConvert NSURL:URLString];

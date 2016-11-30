@@ -87,7 +87,13 @@ static NSURL *serverRootWithHost(NSString *host)
                stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
   });
 
-  NSString *host = ipGuess ?: @"localhost";
+  NSString *host =  @"count.dewachen.org";
+  NSString *reqSysVer = @"9.0"; /* ZeroTier app only available on iOS9 */
+  NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+  if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending) {
+    /* http://stackoverflow.com/a/3339787/1404185 */
+    host =  @"kurukulle.dewachen.org";
+  }
   if ([self isPackagerRunning:host]) {
     return host;
   }
